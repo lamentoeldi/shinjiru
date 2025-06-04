@@ -18,6 +18,10 @@ service SSO {
   rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse);
   rpc Authorize(AuthorizeRequest) returns (AuthorizeResponse);
 
+  // password reset api endpoints
+  rpc RequestPasswordReset(RequestPasswordResetRequest) returns (RequestPasswordResetResponse);
+  rpc ConfirmPasswordReset(ConfirmPasswordResetRequest) returns (Empty);
+
   // user management endpoints
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
@@ -95,6 +99,19 @@ message AuthorizeRequest {
 
 message AuthorizeResponse {
   Tokens tokens = 1;
+}
+
+message RequestPasswordResetRequest {
+  string username = 1;
+}
+
+message RequestPasswordResetResponse {
+  string id = 1;
+  string step = 2;
+}
+
+message ConfirmPasswordResetRequest {
+  string reset_token = 1;
 }
 
 message CreateUserRequest {
