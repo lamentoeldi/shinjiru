@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package sso;
+option go_package = "pkg/gen/go/sso";
+
+message Realm {
+  string id = 1;
+  string name = 2;
+}
+
+message UserCredentials {
+  string email = 1;
+  string password = 2;
+}
+
+message User {
+  string id = 1;
+  string realm_id = 2;
+  string username = 3;
+  bytes password = 4;
+  repeated Role roles = 5;
+  map<string, string> attributes = 6;
+}
+
+message Role {
+  string id = 1;
+  string name = 2;
+}
+
+message Session {
+  string id = 1;
+  string user_id = 2;
+  string platform = 3;
+  uint64 last_active = 4;
+  uint64 created_at = 5;
+}
+
+message Tokens {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message Empty {}

@@ -1,0 +1,10 @@
+openapi: 3.1.0
+info:
+  title: Shinjiru
+  description: Shinjiru is an advanced SSO system with vast functional and flexible architecture, making it easy to both start using it out-of-box or adapt it for your requirements
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  
+# wip

@@ -1,0 +1,163 @@
+syntax = "proto3";
+
+package sso;
+option go_package = "pkg/gen/go/sso";
+
+import "models.proto";
+
+service SSO {
+  // realm management api endpoints
+  rpc CreateRealm(CreateRealmRequest) returns (CreateRealmResponse);
+  rpc GetRealm(GetRealmRequest) returns (GetRealmResponse);
+  rpc GetRealms(GetRealmsRequest) returns (GetRealmsResponse);
+  rpc UpdateRealm(UpdateRealmRequest) returns (Empty);
+  rpc DeleteRealm(DeleteRealmRequest) returns (Empty);
+
+  // authentication api endpoints
+  rpc StartAuthentication(StartAuthenticationRequest) returns (StartAuthenticationResponse);
+  rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse);
+  rpc Authorize(AuthorizeRequest) returns (AuthorizeResponse);
+
+  // user management endpoints
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (Empty);
+  rpc DeleteUser(DeleteUserRequest) returns (Empty);
+
+  // user role management endpoints
+  rpc AddRole(AddRoleRequest) returns (Empty);
+  rpc RemoveRole(RemoveRoleRequest) returns (Empty);
+
+  // session management endpoints
+  rpc GetSessions(GetSessionsRequest) returns (GetSessionsResponse);
+  rpc TerminateSession(TerminateSessionRequest) returns (Empty);
+  rpc TerminateAllSessions(TerminateAllSessionsRequest) returns (Empty);
+
+  // token management endpoints
+  rpc RefreshTokens(RefreshTokensRequest) returns (RefreshTokensResponse);
+
+  // ecdsa public key
+  rpc GetPublicKey(GetPublicKeyRequest) returns (GetPublicKeyResponse);
+}
+
+message CreateRealmRequest {
+  string name = 1;
+}
+
+message CreateRealmResponse {
+  string id = 1;
+}
+
+message GetRealmRequest {
+  string id = 1;
+}
+
+message GetRealmResponse {
+  Realm realm = 1;
+}
+
+message GetRealmsRequest {}
+
+message GetRealmsResponse {
+  repeated Realm realms = 1;
+}
+
+message UpdateRealmRequest {
+  string id = 1;
+  optional string name = 2;
+}
+
+message DeleteRealmRequest {
+  string id = 1;
+}
+
+message StartAuthenticationRequest {
+  UserCredentials credentials = 1;
+}
+
+message StartAuthenticationResponse {
+  string id = 1;
+}
+
+message AuthenticateRequest {
+  string id = 1;
+  map<string, string> meta = 2;
+}
+
+message AuthenticateResponse {
+  string id = 1;
+  string step = 2;
+}
+
+message AuthorizeRequest {
+  string id = 1;
+}
+
+message AuthorizeResponse {
+  Tokens tokens = 1;
+}
+
+message CreateUserRequest {
+  UserCredentials credentials = 1;
+}
+
+message CreateUserResponse {
+  string id = 1;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message GetUserResponse {
+  User user = 1;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  optional string username = 2;
+}
+
+message DeleteUserRequest {
+  string id = 1;
+}
+
+message AddRoleRequest {
+  string user_id = 1;
+  string role_name = 2;
+}
+
+message RemoveRoleRequest {
+  string user_id = 1;
+  string role_name = 2;
+}
+
+message GetSessionsRequest {
+  string user_id = 1;
+}
+
+message GetSessionsResponse {
+  repeated Session sessions = 1;
+}
+
+message TerminateSessionRequest {
+  string id = 1;
+}
+
+message TerminateAllSessionsRequest {
+  string user_id = 1;
+}
+
+message RefreshTokensRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokensResponse {
+  Tokens tokens = 1;
+}
+
+message GetPublicKeyRequest {}
+
+message GetPublicKeyResponse {
+  bytes public_key = 1;
+}
