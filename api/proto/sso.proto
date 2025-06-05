@@ -115,7 +115,8 @@ message ConfirmPasswordResetRequest {
 }
 
 message CreateUserRequest {
-  UserCredentials credentials = 1;
+  string realm_id = 1;
+  UserCredentials credentials = 2;
 }
 
 message CreateUserResponse {

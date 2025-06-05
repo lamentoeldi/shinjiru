@@ -52,3 +52,8 @@ type BlackListPort interface {
 type EventsPort interface {
 	EmitEvent(ctx context.Context, event models.Event) error
 }
+
+type Authenticator interface {
+	Begin(ctx context.Context, auth models.AuthSession) (models.AuthStep, error)
+	Verify(ctx context.Context, auth models.AuthSession) (models.AuthStep, error)
+}

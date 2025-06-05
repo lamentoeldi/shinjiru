@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"time"
 )
@@ -56,4 +57,15 @@ type Event struct {
 type AuthStep struct {
 	ID   uuid.UUID
 	Step string
+}
+
+type AuthSession struct {
+	ID   uuid.UUID
+	Meta map[string]string
+}
+
+type JWTToken struct {
+	ID     uuid.UUID
+	Claims jwt.MapClaims
+	Token  jwt.Token
 }

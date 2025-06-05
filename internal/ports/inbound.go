@@ -30,8 +30,8 @@ type UserManager interface {
 }
 
 type AuthorizationManager interface {
-	StartAuthentication(ctx context.Context, creds models.BaseCredentials) (uuid.UUID, error)
-	Authenticate(ctx context.Context, authID uuid.UUID, authMeta map[string]string) (models.AuthStep, error)
+	StartAuthentication(ctx context.Context, creds models.BaseCredentials) (models.AuthStep, error)
+	Authenticate(ctx context.Context, auth models.AuthSession) (models.AuthStep, error)
 	Authorize(ctx context.Context, authID uuid.UUID) (models.TokenCouple, error)
 
 	RequestPasswordReset(ctx context.Context, username string) (models.AuthStep, error)
