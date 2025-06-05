@@ -23,11 +23,11 @@ type UserCore interface {
 }
 
 type AuthenticationCore interface {
-	VerifyPassword(ctx context.Context, password, hash []byte) error
+	VerifyPassword(ctx context.Context, userID uuid.UUID, password, hash []byte) error
 	ResetPassword(ctx context.Context, userID uuid.UUID, newPassword string) ([]byte, error)
 }
 
 type AuthorizationCore interface {
-	IssueTokens(ctx context.Context, user models.User, claims map[string]any) (access, refresh models.JWTToken, err error)
-	SignTokens(ctx context.Context, access, refresh jwt.Token) (string, string, error)
+	IssueTokens(ctx context.Context, user models.User, claims map[string]any) (access, refresh *jwt.Token, err error)
+	SignTokens(ctx context.Context, access, refresh *jwt.Token) (string, string, error)
 }
