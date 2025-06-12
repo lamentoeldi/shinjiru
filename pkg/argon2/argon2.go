@@ -1,6 +1,7 @@
 package argon2
 
 import (
+	"bytes"
 	"fmt"
 	"golang.org/x/crypto/argon2"
 )
@@ -18,7 +19,7 @@ var (
 
 func CompareHashAndPassword(password, hash []byte, salt string) error {
 	pwdHash := HashPassword(password, salt)
-	if string(hash) != string(pwdHash) {
+	if !bytes.Contains(hash, pwdHash) {
 		return ErrWrongPassword
 	}
 
