@@ -15,11 +15,11 @@ type Core interface {
 }
 
 type RealmCore interface {
-	CreateRealm(ctx context.Context, realmName string) (models.Realm, error)
+	CreateRealm(ctx context.Context, realmName string) (*models.Realm, error)
 }
 
 type UserCore interface {
-	CreateUser(ctx context.Context, username, password string, realmID uuid.UUID) (models.User, error)
+	CreateUser(ctx context.Context, username, password string, realmID uuid.UUID) (*models.User, error)
 }
 
 type AuthenticationCore interface {
@@ -28,6 +28,8 @@ type AuthenticationCore interface {
 }
 
 type AuthorizationCore interface {
-	IssueTokens(ctx context.Context, user models.User, claims map[string]any) (access, refresh *jwt.Token, err error)
+	IssueTokens(ctx context.Context, user *models.User) (*jwt.Token, *jwt.Token, uuid.UUID, error)
 	SignTokens(ctx context.Context, access, refresh *jwt.Token) (string, string, error)
+	VerifyAndExtract(ctx context.Context, token string) (*jwt.Token, *models.JWTClaims, error)
+	GetPublicKey(ctx context.Context) ([]byte, error)
 }
